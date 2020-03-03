@@ -17,8 +17,10 @@ var OUTDIR string
 var JSONFILE string
 
 // Set flags
+// Usage:
+// flattenjson -file="/path/to/file.json" -out="/tmp/folder"
 var infile = flag.String("file", "", "full file path and input file")
-var outdir = flag.String("dir", "/tmp/flattenedjson", "directory location for the output")
+var outdir = flag.String("out", "/tmp/flattenedjson", "directory location for the output")
 
 func main() {
 	flag.Parse()
