@@ -10,14 +10,12 @@ import (
 	"time"
 	"strings"
 	"strconv"
-	"flag"
 )
 
 var OUTDIR string
 var JSONFILE string
 
 func FlattenJson(flagInput string, flagOutput string) {
-	flag.Parse()
 	JSONFILE = flagInput
 	OUTDIR = flagOutput
 	if len(JSONFILE) <= 0 {
