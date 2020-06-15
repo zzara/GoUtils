@@ -3,14 +3,22 @@ package main
 import (
   "flag"
   "goutils"
+  "log"
 )
 
-var flagFlattenJson = flag.String("flattenjson", "false", "Flatten JSON to an un-nested JSON")
-var flagInput = flag.String("i", "false", "Input file")
-var flagOutput = flag.String("o", "false", "Outputs the modified file")
-
 func main() {
-  if *flattenJson != "false" {
-    goutils.FlattenJson(*flagInput, *flagOutput)
+  flag.Parse()
+  if *FlagFlattenJson != "false" {
+    log.Println("Starting FlattenJson")
+    goutils.FlattenJson(*FlagInput, *FlagOutput)
+  } else if *FlagTimeCount != "false" {
+    log.Println("Starting TimeCount")
+    if *FlagTimeCountBack != "false" && *FlagTimeCountIncr != "false" {
+      goutils.TimeCount(*FlagTimeCountBack, *FlagTimeCountIncr)
+    }
+  } else {
+    log.Println("No input received")
+    log.Println(*FlagFlattenJson)
+    log.Println(*FlagTimeCount)
   }
 }
