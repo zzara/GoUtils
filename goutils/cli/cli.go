@@ -2,13 +2,15 @@ package main
 
 import (
   "flag"
+  "goutils"
 )
 
-var flattenJson = flag.Bool("flattenjson", "false", "Flatten JSON to an un-nested JSON")
-var output = flag.Bool("out", "false", "Outputs the modified file")
+var flagFlattenJson = flag.String("flattenjson", "false", "Flatten JSON to an un-nested JSON")
+var flagInput = flag.String("i", "false", "Input file")
+var flagOutput = flag.String("o", "false", "Outputs the modified file")
 
 func main() {
-  if flattenJson != "false" {
-    flattenJson()
+  if *flattenJson != "false" {
+    goutils.FlattenJson(*flagInput, *flagOutput)
   }
 }

@@ -1,4 +1,4 @@
-package main
+package goutils
 
 // Takes a properly formatted JSON file and flattens it to a JSON line file
 
@@ -16,16 +16,10 @@ import (
 var OUTDIR string
 var JSONFILE string
 
-// Set flags
-// Usage:
-// flattenjson -file="/path/to/file.json" -out="/tmp/folder"
-var infile = flag.String("file", "", "full file path and input file")
-var outdir = flag.String("out", "/tmp/flattenedjson", "directory location for the output")
-
-func main() {
+func FlattenJson(flagInput string, flagOutput string) {
 	flag.Parse()
-	JSONFILE = *infile
-	OUTDIR = *outdir
+	JSONFILE = flagInput
+	OUTDIR = flagOutput
 	if len(JSONFILE) <= 0 {
 		panic(fmt.Sprint("execution requires an input file: none found"))
 	}
@@ -34,7 +28,7 @@ func main() {
 	unmarshalledJson := jsonLoader(JSONFILE)
 	for _, jsonObject := range unmarshalledJson {
 		mappedJson, _ := jsonObject.(map[string]interface{})
-		flattenedJson := flattenJson(mappedJson, "")
+		flattenedJson := flattener(mappedJson, "")
 		writeJsonToFile(outFile, flattenedJson)
 	}
 	return
@@ -48,7 +42,7 @@ func addValue(data interface{}, key string, value interface{}) {
 }
 
 // Main JSON flattening recursion function
-func flattenJson(unmarshalledJson map[string]interface{}, name string) map[string]interface{} {
+func flattener(unmarshalledJson map[string]interface{}, name string) map[string]interface{} {
 	flattenedJson := make(map[string]interface{})
     for key, value := range unmarshalledJson {
 		var key_name string
@@ -59,7 +53,7 @@ func flattenJson(unmarshalledJson map[string]interface{}, name string) map[strin
 		}
         switch valueSwitch := value.(type) {
         case map[string]interface{}:
-            for key_sub, value_sub := range flattenJson(valueSwitch, key_name) {
+            for key_sub, value_sub := range flattener(valueSwitch, key_name) {
                 addValue(flattenedJson, key_sub, value_sub)
             }
         case string:
