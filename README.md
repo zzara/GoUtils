@@ -1,1 +1,1 @@
-# GoSnippets
+# GoUtils
