@@ -16,7 +16,10 @@ func main() {
     if *FlagTimeCountBack != "false" && *FlagTimeCountIncr != "false" {
       goutils.TimeCount(*FlagTimeCountBack, *FlagTimeCountIncr)
     }
-  } else {
+  } else if *FlagUrl != "false" {
+    log.Println("Starting HttpGet")
+    goutils.GetUrl(*FlagUrl)
+  }else {
     log.Println("No input received")
     log.Println(*FlagFlattenJson)
     log.Println(*FlagTimeCount)
